@@ -10,6 +10,7 @@ import (
 	"golang.org/x/text/message"
 
 	"github.com/artnoi43/fngobot/fetch"
+	"github.com/artnoi43/fngobot/fetch/binance"
 	"github.com/artnoi43/fngobot/fetch/bitkub"
 	"github.com/artnoi43/fngobot/fetch/satang"
 	"github.com/pkg/errors"
@@ -21,9 +22,11 @@ type answer map[string]map[exchange]fetch.Quoter
 var (
 	bk       exchange = "Bitkub"
 	st       exchange = "Satang"
+	bn       exchange = "Binance"
 	fetchMap          = map[exchange]fetch.FetchFunc{
 		bk: bitkub.Get,
 		st: satang.Get,
+		bn: binance.Get,
 	}
 	printer = message.NewPrinter(language.English)
 )
@@ -76,6 +79,7 @@ func getQuotes(t string) answer {
 		t: {
 			bk: fetchQuotes(t, bk),
 			st: fetchQuotes(t, st),
+			bn: fetchQuotes(t, bn),
 		},
 	}
 }
